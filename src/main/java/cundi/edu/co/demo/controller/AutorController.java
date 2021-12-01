@@ -25,6 +25,7 @@ import cundi.edu.co.demo.service.IAutorService;
 import io.swagger.annotations.ApiParam;
 
 @PreAuthorize("hasAuthority('Administrador')")
+//@PreAuthorize("hasAuthority('Vendedor')")
 @RestController
 @RequestMapping("/autores")
 public class AutorController {

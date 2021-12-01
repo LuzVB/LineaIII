@@ -78,4 +78,10 @@ public class UsuarioServiceImpl2 implements IUsuarioService {
 		return 0;
 	}
 
+	@Override
+	public void guardar(Usuario usuario, int rol) throws ConflictException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

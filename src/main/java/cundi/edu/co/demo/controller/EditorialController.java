@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ import cundi.edu.co.demo.service.IAutorService;
 import cundi.edu.co.demo.service.IEditorialService;
 import io.swagger.annotations.ApiParam;
 
+@PreAuthorize("hasAuthority('Administrador')")
 @RestController
 @RequestMapping("/editoriales")
 public class EditorialController {

@@ -14,7 +14,10 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import cundi.edu.co.demo.dto.UsuarioDto;
+import cundi.edu.co.demo.entity.Rol;
 import cundi.edu.co.demo.entity.Usuario;
 import cundi.edu.co.demo.exception.ArgumentRequiredException;
 import cundi.edu.co.demo.exception.ConflictException;
@@ -29,6 +32,9 @@ public class UsuarioServiceImpl implements IUsuarioService,  UserDetailsService{
 	
 	@Autowired
 	private IUsuarioRepo repo;
+	
+	@Autowired
+	private BCryptPasswordEncoder bcrypt;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -84,8 +90,7 @@ public class UsuarioServiceImpl implements IUsuarioService,  UserDetailsService{
 
 	@Override
 	public Page<Usuario> retornarPaginado(Pageable page) {
-		// TODO Auto-generated method stub
-		return null;
+		return repo.findAll(page);
 	}
 
 	@Override
@@ -95,9 +100,22 @@ public class UsuarioServiceImpl implements IUsuarioService,  UserDetailsService{
 	}
 
 	@Override
-	public void guardar(Usuario tabla) throws ConflictException {
+	public void guardar(Usuario usuario , int rol) throws ConflictException {
 		// TODO Auto-generated method stub
+		if (repo.existsByDocumento(usuario.getDocumento())) {
+			throw new ConflictException("El documento ya existe");
+		}
+		if (repo.existsByNick(usuario.getNick())) {
+			throw new ConflictException("El nick ya existe");
+		}
 		
+		Rol rolGuardar = new Rol();
+		rolGuardar.setIdRol(rol);
+		
+		usuario.setClave(bcrypt.encode(usuario.getClave()).toString());
+		usuario.setRol(rolGuardar);
+		this.repo.save(usuario);
+
 	}
 
 	@Override
@@ -116,6 +134,13 @@ public class UsuarioServiceImpl implements IUsuarioService,  UserDetailsService{
 	public int sumar(int... num) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+
+	@Override
+	public void guardar(Usuario tabla) throws ConflictException {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
