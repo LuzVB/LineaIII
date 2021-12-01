@@ -24,7 +24,7 @@ import cundi.edu.co.demo.exception.ModelNotFoundException;
 import cundi.edu.co.demo.service.IAutorService;
 import io.swagger.annotations.ApiParam;
 
-@PreAuthorize("hasAuthority('Administrador')")
+//@PreAuthorize("hasAuthority('Administrador')")
 //@PreAuthorize("hasAuthority('Vendedor')")
 @RestController
 @RequestMapping("/autores")
